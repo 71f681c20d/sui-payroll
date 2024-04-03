@@ -7,7 +7,7 @@ module backend::scratch1 {
 
     friend backend::business;
 
-    struct Treasury has key { // Object containing a reference to the coin pool to draw Payments from
+    struct Treasury has key, store { // Object containing a reference to the coin pool to draw Payments from
         id: UID,
         balance: u64,
         denomination: String, // USDC, BTC, ETH, etc. The denomination of the currency in the treasury
@@ -29,3 +29,22 @@ module backend::scratch1 {
     }
 
 }
+
+module backend::payment {
+    /** The Payment object is created when a payment is made to an employee
+        The Payment object contains coins and a reference to the PayStub object
+        The Payment object sent to the employee wallet directly from Treasury; cannot be intercepted by another employee
+        Payments and Paystubs are for all employees are created in the same PTB transaction block
+    */
+    use sui::tx_context::{TxContext, Self};
+    use sui::transfer::Self;
+    use sui::object::{Self, UID};
+    use std::string::String;
+
+    struct Payment has key, store {
+        id: UID,
+        pay_stub_ref: &PayStub,
+    }
+
+}
+

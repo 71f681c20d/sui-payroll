@@ -7,11 +7,14 @@ module backend::employee {
 
     use backend::compensation::Compensation;
 
-    struct Employee {
+    struct Employee has key, store {
+        id: UID,
         name: String,
+        role: String,
         age: u32,
         compensation: Compensation,
         entitlement: vector<Entitlement>,
+        pay_stubs: vector_table<PayStub>,
     }
 
 }
@@ -22,7 +25,7 @@ module backend::compensation {
     use sui::object::{Self, UID};
     use std::string::String;
 
-    struct Compensation {
+    struct Compensation has store {
         salary: u32,
         bonus: u32,
     }
@@ -36,7 +39,7 @@ module backend::allocations {
     use sui::object::{Self, UID};
     use std::string::String;
 
-    struct Allocations {
+    struct Allocations has store {
         name: String,
         amount: u32,
     }
@@ -91,6 +94,47 @@ module backend::entitlement {
 
     public(friend) fun create_entitlement_group(name: String, entitlements: vector<Entitlement>) {
         ENTITLEMENT_GROUPS.push_back(EntitlementGroup { name, entitlements })
+    }
+
+}
+
+module backend::paystub {
+    /** This immutable shared object contains metadata about payments made to each employee
+        The PayStub object is created when a payment is made to an employee
+        The Paystub object is stored in the employee's pay_stubs vector_table for auditing purposes
+        The Payment object sent to the employee wallet references the PayStub object for auditing purposes
+    */
+    use sui::tx_context::{TxContext, Self};
+    use sui::transfer::Self;
+    use sui::object::{Self, UID};
+    use std::string::String;
+
+    struct PayStub has key, store {
+        id: UID,
+        employee_id: UID,
+        amount: u32,
+        date: u32,
+    }
+
+}
+
+module backend::payment {
+    /** This immutable shared object contains metadata about payments made to each employee
+        The Payment object is created when a payment is made to an employee
+        The Payment object is stored in the employee's pay_stubs vector_table for auditing purposes
+        The Payment object sent to the employee wallet references the PayStub object for auditing purposes
+    */
+    use sui::tx_context::{TxContext, Self};
+    use sui::transfer::Self;
+    use sui::object::{Self, UID};
+    use std::string::String;
+
+    struct Payment has key, store {
+        id: UID,
+        employee_id: UID,
+        amount: u32,
+        date: u32,
+        pay_stub_id: UID,
     }
 
 }

@@ -67,7 +67,13 @@ Bridging
 - In order to do this, the Wormhole bridge will be used to bridge assets onto Sui as wrapped coins, create payment objects with the wrapped coins, and then unwrap the coins and send them to the employee's personal wallet address(es)
 - When the Payment objects are created, there needs to be a way for the payments to be measured. If you are paying from multiple cryptos to other cryptos, and they are all trading at different prices, how do you know how much to send of each and how much to pay to each employee?
 - In order to correctly price the asset denominations for payments, the Pyth network can be used as an oracle for swap rates between crypto trading pairs. This will allow the business to choose which underlying asset each the reserve or payment assets will be priced in. So that payments can be priced relative to stablecoins, bitcoin, etc...
+Bridging service:
+- Bitsui.io: bitcoin-sui bridge; sui-wrapped bitcoin
 
-
-
+Treasury and Payment modules
+- Reference: https://docs.sui.io/references/framework/sui-framework/balance
+- Standard library modules
+    - Supply<T>
+    - Balance<T>
+    - Coin
 

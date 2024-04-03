@@ -51,18 +51,16 @@ module backend::business {
         // Check that the function caller has the required entitlements
         assert!(check_entitlement(required_entitlements, employee), "Error: Insufficient Entitlements to create payments for employees");
 
-        // fun sum_intermediate(n: u64): u64 {
-            let sum = 0;
-            let i = 0;
-            loop {
-                i = i + 1;
-                if (i % 10 == 0) continue;
-                if (i > n) break;
-                sum = sum + i
-            };
+        let employees_len = Vector::length(&employees);
+        let i = 0;
 
-            sum
-        // }
+        while (i < employees_len) {
+            let employee = Vector::borrow(&employees, i);
+            let employee_address = &employee.wallet_address; // Assuming `wallet_address` field exists
+            let payment = Payment::create_payment(amount, *employee_address);
+            Payment::send_payment(&mut payment, *employee_address);
+            i = i + 1;
+        }
 
         for employee in business.employees.iter_mut() {
             treasury::transfer(business.treasury, employee, employee.salary);
