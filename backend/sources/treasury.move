@@ -1,5 +1,5 @@
-#[lint_allow(self_transfer)]
-module backend::scratch1 {
+// #[lint_allow(self_transfer)]
+module backend::treasury {
     use sui::tx_context::{TxContext, Self};
     use sui::transfer::Self;
     use sui::object::{Self, UID};

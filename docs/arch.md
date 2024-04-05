@@ -1,5 +1,22 @@
 # Architecture
 
+## V2 Arch
+- The idea is to generalize the entities in the Payroll app so they can be reused and composed to serve other business purposes in the enterprise
+- For instance, Payroll deals one component of a business operating environment: employee relationships with the firm
+
+- Generalize a business to be an enterprise. This can be any social system consisting of people and software interacting and performing internal operations.
+    - An enterprise can be a business, government, school, or any other type of institution.
+- Generalize the operating environment of the enterprise to consist of relationships with other entities
+    - Consumers (customers)
+    - Stakeholders (shareholders)
+    - Vendors (suppiers)
+    - Workers (employees)
+- Each of these relationships requires certain types of transactions and entities in order for the enterprise to interact with its counterparties
+    - 
+ 
+
+
+## V1 arch
 - The `Business` object 
     - Contains the resources owned by the enterprise
     - Does not execute transactions. The object only holds resources such as `Treasury` and functions which operate on business resources
@@ -60,6 +77,7 @@ Design choices
 - The Employee object needs to contain a destination address which will be used to send new `Payment` objects to at the time of creation
 - The `Business` object needs to contain various functions which are relevant to operating the business, such as modifying the `Treasury`, managing `Employees`, and generating `Payments`. These functions can only be called by `Employee` objects which have the appropriate `Entitlements` which authorize the employee to perform these transactions
 - The  `Entitlements` object contains a predefined list of entitlements which can be updated by an authorized `Employee`. It also contains a set of functions which allow an entitlement to be granted to or revoked from other employees. There should be a way to manage which entitlements an employee is authorized to grant or revoke, so they don't revoke the entitlement of the CEO, for example
+- The `Compensation` object belongs to the `Employee` object and can be updated to change the pay. The compensation contains a table of key/values, for example "bonus", 1000. When `Paystub` objects are created for that employee, the `Compensation` field is copied as a snapshot into the `Paystub`, which will describe the compensation breakdown at the time the payment was made
 
 Bridging
 - One nice feature about the application is that a `Treasury` can contain many different cryptocurrency reserve assets, like BTC, ETH, SOL, and stablecoins. 
@@ -71,9 +89,21 @@ Bridging service:
 - Bitsui.io: bitcoin-sui bridge; sui-wrapped bitcoin
 
 Treasury and Payment modules
-- Reference: https://docs.sui.io/references/framework/sui-framework/balance
+- Reference: https://docs.sui.io/references/framework/sui-framework/balance 
+- Coin reference: https://docs.sui.io/standards/coin 
 - Standard library modules
     - Supply<T>
     - Balance<T>
-    - Coin
+    - Coin https://docs.sui.io/standards/coin
+    - Closed-Loop token (tokens with programmable rules)
+    - The Rule module (in closed-loop token standard) is used to define rules for token transactions
+    - TokenPolicy
+
+Interfaces
+- Authorized Transaction interface; contains methods for checking entitlement before completing a transaction
+
+
+Experiments
+- Create an experimental Payment object
+- Create a simple object with a Coin field, and 
 

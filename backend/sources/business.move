@@ -67,3 +67,52 @@ module backend::business {
         }
     }
 }
+
+module backend::receipt { // formerly Paystub
+    /** This immutable shared object contains metadata about payments made to each employee
+        The PayStub object is created when a payment is made to an employee
+        The Paystub object is stored in the employee's pay_stubs vector_table for auditing purposes
+        The Payment object sent to the employee wallet references the PayStub object for auditing purposes
+    */
+    use sui::tx_context::{TxContext, Self};
+    use sui::transfer::Self;
+    use sui::object::{Self, UID};
+
+    struct Receipt has key, store {
+        id: UID,
+        employee_id: UID,
+        compensation: Compensation,
+        timestamp: u64,
+    }
+
+    public(friend) fun create_paystub(employee: Employee, ctx: TxContext) {
+        // Calculate
+        let paystub: PayStub = { 
+            id: object::new(ctx),
+            employee_id: employee.id, 
+            compensation: employee.compensation, 
+            timestamp: TimeEvent { timestamp_ms: clock::timestamp_ms(clock) }, 
+            };
+        // Make the Paystub object immutable
+        transfer::freeze_object(object);
+    }
+
+}
+
+module backend::payment {
+    /** The Payment object is created when a payment is made to an employee
+        The Payment object contains coins and a reference to the PayStub object
+        The Payment object sent to the employee wallet directly from Treasury; cannot be intercepted by another employee
+        Payments and Paystubs are for all employees are created in the same PTB transaction block
+    */
+    use sui::tx_context::{TxContext, Self};
+    use sui::transfer::Self;
+    use sui::object::{Self, UID};
+    use std::string::String;
+
+    struct Payment has key, store {
+        id: UID,
+        pay_stub_ref: &PayStub,
+    }
+
+}
