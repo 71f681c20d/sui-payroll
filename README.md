@@ -24,10 +24,10 @@ What does the app do?
     - A list of Paycheck objects, with each one including all the data you might expect on a paystub, like compensation breakdown etc.. and which can be sent or bridged or do whatever the employee wants to 
 
 Objects
-- Employer
-- PriviledgedEmployee (HR staff employees)
-- Employee
-- Paycheck
+- Employer (singleton; only 1 per business)
+- PriviledgedEmployee (HR staff employees that access other people's pay)
+- Employee (Unpriviledged employee that receives pay)
+- PaycheckData
 - Treasury
 
 

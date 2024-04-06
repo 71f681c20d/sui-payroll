@@ -12,7 +12,19 @@
     - Vendors (suppiers)
     - Workers (employees)
 - Each of these relationships requires certain types of transactions and entities in order for the enterprise to interact with its counterparties
-    - 
+    - Payments
+    - Receipts
+    - Value (value is the thing that is exchanged for payments, such as a product or labor)
+    - Relationship wrappers; Employee, customer, vendor, and stakeholder wrapper; Interfaces that can be instantiated
+- The behavior of the enterprise...
+    - Pipe payments between relationships; split payments in this pipeline. Ex: payments from customer to split to employees, vendors, and shareholders
+    - Issue receipts; Instead of a merchant and customer copy, a shared immutable object
+    - Deliver and receive value; products or services exchangeable for money
+    - Holds a treasury as a capital hub; a midpoint where money flowing into the enterprise is parked, and where outflows come from
+- Policies
+    - There are certain actions a relationship should be able to do or not do
+    - These actions are configured a Policies and/or TransferPolicies
+
  
 
 
