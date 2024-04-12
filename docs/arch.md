@@ -25,7 +25,19 @@
     - There are certain actions a relationship should be able to do or not do
     - These actions are configured a Policies and/or TransferPolicies
 
- 
+Enterprise transactions
+- when an Enterprise interacts with any of its relationships (its operating environment), new transactions are created.
+- These transactions come in the form of Payment and Receipt objects. There are special types of Receipt objects for each relationship prototype
+- Receipts are immutable objects which are shared with all parties involved in the transaction
+- Payments contain coin objects. There are different types of Payment objects for each type of relationship
+- The Receipt payment contains a reference to the Payment object (should it be the other way around?) which allows parties to analyze the source or destination of funds
+- 
+
+Relationsips
+- Ideally, new types of enterprise relationships can be created to make the enterprise more adaptive
+- Relationships are essentially configuration params which stipulate:
+    - Source and destination of Payment objects
+    - Components of the transaction, logged in the Receipt object and used to calculate Payment amounts
 
 
 ## V1 arch

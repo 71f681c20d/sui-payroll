@@ -33,6 +33,7 @@ module backend::enterprise {
         dynamic_field::add(&mut enterprise.id, b"employees", table_vec::empty<Employee>(ctx));
         //dynamic_field::add(&mut enterprise.id, b"stakeholders", table_vec::empty<Stakeholder>(ctx));
         //dynamic_field::add(&mut enterprise.id, b"vendors", table_vec::empty<Vendor>(ctx));
+        //dynamic_field::add(&mut enterprise.id, b"customers", table_vec::empty<Customer>(ctx));
         // Transfer the enterprise object to the module/package publisher
         transfer::public_transfer(enterprise, tx_context::sender(ctx));
     }
